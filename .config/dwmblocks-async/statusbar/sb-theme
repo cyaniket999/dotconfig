@@ -1,0 +1,82 @@
+#!/bin/bash
+
+# Configuration Paths & Constants
+SCRIPT_PATH="$HOME/.config/dwmblocks-async/statusbar/sb-theme"
+DWM_DIR="$HOME/.config/suckless/dwm"
+CONFIG_FILE="$DWM_DIR/theme.h"
+SIGNAL_NUM=14
+
+# Map theme number to friendly name
+declare -A THEME_NAMES=(
+    [1]="Tokyo Night"
+    [2]="Catppuccin"
+    [3]="Nord"
+    [4]="Gruvbox"
+    [5]="Dracula"
+    [6]="Rosé Pine"
+    [7]="One Dark"
+)
+
+get_current_theme() {
+    local num
+    num=$(awk '/^[[:space:]]*#define[[:space:]]+ACTIVE_THEME[[:space:]]+/ {print $3; exit}' "$CONFIG_FILE" 2>/dev/null)
+    echo "${num:-1}"
+}
+
+apply_theme() {
+    local num=$1
+
+    if [ ! -f "$CONFIG_FILE" ]; then
+        notify-send "DWM Theme Error" "theme.h not found at $CONFIG_FILE" 2>/dev/null
+        exit 1
+    fi
+
+    # Update ACTIVE_THEME macro in theme.h
+    sed -i -E "s/(#define[[:space:]]+ACTIVE_THEME[[:space:]]+)[0-9]+/\1$num/" "$CONFIG_FILE"
+
+    # Touch config.h to force Make to trigger recompilation
+    touch "$DWM_DIR/config.h"
+
+    # Move to build directory and compile/install natively
+    if cd "$DWM_DIR"; then
+        build_output=$(make clean install 2>&1)
+        if [ $? -eq 0 ]; then
+            # Atomic reload via SIGHUP
+            pkill -HUP -u "$UID" -x dwm
+            # Refresh status bar block
+            pkill -RTMIN+"${SIGNAL_NUM}" dwmblocks 2>/dev/null || pkill -RTMIN+"${SIGNAL_NUM}" dwmblocks-async 2>/dev/null
+        else
+            notify-send "DWM Build Error" "$build_output" 2>/dev/null
+        fi
+    else
+        notify-send "DWM Directory Error" "Cannot enter $DWM_DIR" 2>/dev/null
+    fi
+}
+
+# Worker thread for background detached execution
+if [ "$1" = "apply" ]; then
+    apply_theme "$2"
+    exit 0
+fi
+
+# Mouse Click Actions from dwmblocks
+case "${BLOCK_BUTTON:-$BUTTON}" in
+    1) # Left-click: Open dmenu theme menu
+        themes="1. Tokyo Night\n2. Catppuccin Mocha\n3. Nord\n4. Gruvbox Dark\n5. Dracula\n6. Rosé Pine\n7. One Dark"
+        chosen=$(echo -e "$themes" | dmenu -i -p "Select Theme:")
+        [ -z "$chosen" ] && exit 0
+        theme_num=$(echo "$chosen" | cut -d'.' -f1)
+        nohup "$SCRIPT_PATH" apply "$theme_num" >/dev/null 2>&1 &
+        ;;
+    2) # Middle-click: Open sb-theme script in Neovim
+        nohup "${TERMINAL:-alacritty}" -e nvim "$SCRIPT_PATH" >/dev/null 2>&1 &
+        ;;
+    3) # Right-click: Open theme.h in Neovim
+        nohup "${TERMINAL:-alacritty}" -e nvim "$CONFIG_FILE" >/dev/null 2>&1 &
+        ;;
+esac
+
+# Output string for status bar rendering
+current_num=$(get_current_theme)
+echo "󰏘 ${THEME_NAMES[$current_num]:-Unknown}"
+exit 0

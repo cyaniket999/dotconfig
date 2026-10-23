@@ -1,0 +1,50 @@
+#!/bin/sh
+
+# Configuration: Set to 1 to show percentage, 0 to show icon only
+SHOW_PERCENTAGE=0
+
+# Step size for brightness adjustments on mouse scroll (in %)
+STEP=5
+
+# Signal assigned to sb-brightness in blocks.h
+SIGNAL_NUM=13
+
+# Handle mouse click and scroll events from dwmblocks
+case $BLOCK_BUTTON in
+    1|3) setsid -f arandr >/dev/null 2>&1 ;;                   # Left/Right-click: Open display manager
+    2)   setsid -f "${TERMINAL:-alacritty}" -e nvim "$0" ;;    # Middle-click: Edit script
+    4)   brightnessctl set +"${STEP}"% >/dev/null 2>&1 ;;     # Scroll Up: Increase brightness
+    5)   brightnessctl set "${STEP}"%- >/dev/null 2>&1 ;;     # Scroll Down: Decrease brightness
+esac
+
+# Force instant dwmblocks status bar update on interaction
+[ -n "$BLOCK_BUTTON" ] && pkill -RTMIN+"${SIGNAL_NUM}" dwmblocks >/dev/null 2>&1
+
+# 1. Get current brightness percentage safely
+BRIGHTNESS=$(brightnessctl -m 2>/dev/null | awk -F, '{print $4}' | tr -d '%')
+
+# Exit gracefully if no backlight device is detected (prints placeholder instead of crashing)
+if [ -z "$BRIGHTNESS" ]; then
+    echo "󰃠 --%"
+    exit 0
+fi
+
+# 2. Determine Dynamic Icon (7-Tier Fine Scale)
+if   [ "$BRIGHTNESS" -ge 90 ]; then ICON="󰃠"
+elif [ "$BRIGHTNESS" -ge 75 ]; then ICON="󰃟"
+elif [ "$BRIGHTNESS" -ge 60 ]; then ICON="󰃞"
+elif [ "$BRIGHTNESS" -ge 45 ]; then ICON="󰃝"
+elif [ "$BRIGHTNESS" -ge 30 ]; then ICON="󰃜"
+elif [ "$BRIGHTNESS" -ge 15 ]; then ICON="󰃛"
+else                                ICON="󰃚"
+fi
+
+# 3. Output based on percentage toggle
+if [ "$SHOW_PERCENTAGE" -eq 1 ]; then
+    echo "${ICON} ${BRIGHTNESS}%"
+else
+    echo "${ICON}"
+fi
+
+# Always exit with success status (0) so dwmblocks-async does not throw an error
+exit 0

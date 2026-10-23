@@ -1,0 +1,39 @@
+#!/bin/sh
+
+# Configuration: Set to 1 to show percentage, 0 to show circular gauge bar only
+SHOW_PERCENTAGE=0
+
+# Handle mouse click events from dwmblocks
+case $BLOCK_BUTTON in
+    3) setsid -f thunar ~ ;;                              # Left/Right-click: Open home in GUI file manager
+    2)   setsid -f "${TERMINAL:-alacritty}" -e nvim "$0" ;; # Middle-click: Edit script
+esac
+
+# Reusable function to map any percentage (0-100) to a dynamic circular gauge bar
+get_circle_bar() {
+    v=$1
+    [ -z "$v" ] && v=0
+    if   [ "$v" -ge 88 ]; then echo "󰪥" # 88% – 100% (Full)
+    elif [ "$v" -ge 76 ]; then echo "󰪤" # 76% – 87%
+    elif [ "$v" -ge 63 ]; then echo "󰪣" # 63% – 75%
+    elif [ "$v" -ge 51 ]; then echo "󰪢" # 51% – 62%
+    elif [ "$v" -ge 38 ]; then echo "󰪡" # 38% – 50%
+    elif [ "$v" -ge 26 ]; then echo "󰪠" # 26% – 37%
+    elif [ "$v" -ge 13 ]; then echo "󰪟" # 13% – 25%
+    else                       echo "󰪞" # 0%  – 12% (Empty)
+    fi
+}
+
+# Calculate Home Partition (/home) Usage Percentage with fallback to root
+HOME_VAL=$(df -h /home 2>/dev/null | awk 'NR==2 {print $5}' | tr -d '%')
+[ -z "$HOME_VAL" ] && HOME_VAL=$(df -h / | awk 'NR==2 {print $5}' | tr -d '%')
+[ -z "$HOME_VAL" ] && HOME_VAL=0
+
+HOME_BAR=$(get_circle_bar "$HOME_VAL")
+
+# Output based on the toggle switch
+if [ "$SHOW_PERCENTAGE" -eq 1 ]; then
+    echo "${HOME_BAR} ${HOME_VAL}%"
+else
+    echo "${HOME_BAR}"
+fi

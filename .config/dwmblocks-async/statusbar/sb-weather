@@ -1,0 +1,34 @@
+#!/bin/sh
+
+# Handle mouse click events from dwmblocks
+case $BLOCK_BUTTON in
+    3) setsid -f "${TERMINAL:-alacritty}" -e sh -c "curl -s wttr.in && echo && read -p 'Press Enter to close...'" ;; # Right-click: Open full weather forecast in terminal
+    2) setsid -f "${TERMINAL:-alacritty}" -e nvim "$0" ;;                                                           # Middle-click: Edit script
+esac
+# Fetch condition text and temperature separated by a pipe (e.g., "Partly cloudy|+24°C")
+DATA=$(curl -s --max-time 3 "wttr.in/?format=%C|%t")
+
+# Fallback display if offline or request times out
+if [ -z "$DATA" ] || echo "$DATA" | grep -q "Unknown\|<html>"; then
+    echo "󰖐 N/A"
+    exit 0
+fi
+
+# Split condition and temperature
+CONDITION=$(echo "$DATA" | cut -d'|' -f1 | tr '[:upper:]' '[:lower:]')
+TEMP=$(echo "$DATA" | cut -d'|' -f2)
+
+# Dynamic Icon Selection based on weather condition keywords
+case "$CONDITION" in
+    *sun*|*clear*)             ICON="󰖙" ;; # Sunny / Clear
+    *partly*|*few*|*scattered*) ICON="󰖕" ;; # Partly cloudy
+    *cloud*|*overcast*)        ICON="󰖐" ;; # Cloudy
+    *rain*|*shower*|*drizzle*)  ICON="󰖖" ;; # Rainy
+    *thunder*|*storm*)         ICON="󰙾" ;; # Thunderstorm
+    *snow*|*blizzard*|*ice*)    ICON="󰼶" ;; # Snowy
+    *fog*|*mist*|*haze*)       ICON="󰖑" ;; # Foggy / Misty
+    *)                         ICON="󰖐" ;; # Default fallback
+esac
+
+# Output dynamic icon and temperature
+echo "$ICON $TEMP"
