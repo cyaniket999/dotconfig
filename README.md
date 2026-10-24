@@ -10,7 +10,7 @@
 
 <br />
 
-<img src="assets/1.png" alt="Desktop Showcase" width="90%">
+<img src="~/.config/assets/1.png" alt="Desktop Showcase" width="90%">
 
 </div>
 
@@ -78,9 +78,9 @@ chmod +x ~/.local/bin/*
 
 ## 📸 Screenshots
 
-<img src="assets/2.png" width="90%" alt="desktop">
-<img src="assets/3.png" width="90%" alt="desktop">
-<img src="assets/4.png" width="90%" alt="desktop">
+<img src="~/.config/assets/2.png" width="90%" alt="desktop">
+<img src="~/.config/assets/3.png" width="90%" alt="desktop">
+<img src="~/.config/assets/4.png" width="90%" alt="desktop">
 <div align="center">
 
 Crafted for **Linux**
