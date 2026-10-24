@@ -1,9 +1,5 @@
 <div align="center">
-*Clean, modular, and performance-focused dotfiles for Linux.*
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Arch Linux](https://img.shields.io/badge/OS-Arch%20Linux-blueviolet?logo=archlinux&logoColor=white)](https://archlinux.org)
-[![Shell](https://img.shields.io/badge/Shell-Bash-4EAA25?logo=gnu-bash&logoColor=white)](https://www.gnu.org/software/bash/)
-
+**Clean, modular, and performance-focused dotfiles for Linux.**
 ## 🎨 Overview
 
 A minimal, keyboard-driven desktop environment built around **dwm** and **dmenu**. It features system-wide, dynamic theme switching powered by **Pywal**, fully synchronized across the window manager, launcher, terminal, and status bar.
