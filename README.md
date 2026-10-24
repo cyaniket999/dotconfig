@@ -171,6 +171,7 @@ cd ~/.config/dmenu && sudo make clean install
 To ensure the wallpaper and theme switcher script works correctly on your system, follow these steps:
 
 1. Update dwm/config.h
+
 Open (dwm/config.h) and replace YOURUSERNAME with your actual Linux system username:
 
 static const char *wallcmd[] = { "/home/YOURUSERNAME/.config/scripts/set-wallpaper", NULL };
@@ -181,11 +182,13 @@ cd ~/.config/dwm && sudo make clean install
 ```
 
 2. Configure Your Wallpaper Directory
+
 Open (~/.config/custom-scripts/set-wallpaper) and ensure 'WALLPAPER_DIR' points to the directory where your wallpaper images are stored:
 
 WALLPAPER_DIR="$HOME/Pictures/backgrounds"
 
 3. Ensure pywal Configuration is Ready
+
 - Install pywal via your package manager: for arch :-
 ```
 yay -S python-pywal
