@@ -1,8 +1,0 @@
-#! /bin/bash
-# Handle mouse click events from dwmblocks
-case $BLOCK_BUTTON in
-    2) setsid -f "${TERMINAL:-alacritty}" -e nvim "$0" ;; # Middle-click: Edit script
-esac
-kern="$(uname -r)"
-echo -e "$kern "
-
