@@ -15,20 +15,20 @@
 
 // Control whether a trailing delimiter should be appended to the status.
 #define TRAILING_DELIMITER 0
+
 // Define blocks for the status feed as X(icon, cmd, interval, signal).
-#define BLOCKS(X)                                                                   \
-    X("", "/home/aniket/.config/dwmblocks-async/statusbar/sb-cpu",       10,  1)     \
-    X("", "/home/aniket/.config/dwmblocks-async/statusbar/sb-memory",    10,  2)     \
-    X("", "/home/aniket/.config/dwmblocks-async/statusbar/sb-weather",  3600,  3)     \
-    X("", "/home/aniket/.config/dwmblocks-async/statusbar/sb-home",      60,  4)     \
-    X("", "/home/aniket/.config/dwmblocks-async/statusbar/sb-battery",    5,  5)     \
-    X("", "/home/aniket/.config/dwmblocks-async/statusbar/sb-update",   3600,   10)     \
-    X("", "/home/aniket/.config/dwmblocks-async/statusbar/sb-temp",      10,  7)     \
-    X("", "/home/aniket/.config/dwmblocks-async/statusbar/sb-brightness",     0, 13)     \
-    X("", "/home/aniket/.config/dwmblocks-async/statusbar/sb-bluetooth", 10,  8)     \
-    X("", "/home/aniket/.config/dwmblocks-async/statusbar/sb-network",   10,  9)     \
-    X("", "/home/aniket/.config/dwmblocks-async/statusbar/sb-volume",     0, 6)     \
-    X("", "/home/aniket/.config/dwmblocks-async/statusbar/sb-clock",      1, 11)     \
-    X("", "/home/aniket/.config/dwmblocks-async/statusbar/sb-theme",      0, 14)     \
-    X("", "/home/aniket/.config/dwmblocks-async/statusbar/sb-power",      0, 12)
+#define BLOCKS(X)             \
+    X("", "~/.config/dwmblocks-async/sb/sb-cpu",                10, 12) \
+    X("", "~/.config/dwmblocks-async/sb/sb-ram",                10, 11) \
+    X("", "~/.config/dwmblocks-async/sb/sb-temp",               60, 10) \
+    X("", "~/.config/dwmblocks-async/sb/sb-home",               300, 9) \
+    X("", "~/.config/dwmblocks-async/sb/sb-update",             3600, 8) \
+    X("", "~/.config/dwmblocks-async/sb/sb-brightness",         0, 2) \
+    X("", "~/.config/dwmblocks-async/sb/sb-network",            5, 7) \
+    X("", "~/.config/dwmblocks-async/sb/sb-bluetooth",          5, 6) \
+    X("", "~/.config/dwmblocks-async/sb/sb-battery",            5, 5) \
+    X("", "~/.config/dwmblocks-async/sb/sb-volume",             0, 1) \
+    X("", "~/.config/dwmblocks-async/sb/sb-clock",              1, 3) \
+    X("", "~/.config/dwmblocks-async/sb/sb-power",              0, 4)
+
 #endif  // CONFIG_H
