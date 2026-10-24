@@ -121,6 +121,9 @@ To replicate this environment from a clean `dwm` build, apply the following patc
 | `Super` + `Enter` | Launch Terminal (`Alacritty`) | 
 | `Super` + `R` | Launch Application Menu (`Rofi`) | 
 | `Super` + `W` | Open Pywal Wallpaper & Theme Switcher (`Dmenu`) | 
+-- Replace YOURUSERNAME with your username inside /dwm/config.h to function `SUPER` + `W` 
+static const char *wallcmd[] = { "/home/YOURUSERNAME/.config/custom-scripts/set-wallpaper", NULL };
+
 | `Super` + `E` | Open File Manager (`Thunar`) | 
 | `Super` + `C` | Close Active Window | 
 | `ALT` + `NUM` | Change Tags| 
