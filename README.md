@@ -1,7 +1,8 @@
 <div align="center">
 **Clean, modular, and performance-focused dotfiles for Linux.**
+<br/>
 <img src="./assets/1.png" alt="Desktop Showcase" width="90%">
-<br />
+<br/>
 </div>
 ## 🎨 Overview
 
