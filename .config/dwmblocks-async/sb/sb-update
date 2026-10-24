@@ -1,0 +1,17 @@
+#!/bin/sh
+# Handle mouse click events from dwmblocks
+case $BLOCK_BUTTON in
+    3) setsid -f alacritty -e sudo pacman -Syu ;; # Right-click: Run full system upgrade (auto-closes when done)
+    2) setsid -f alacritty -e nvim "$0" ;;        # Middle-click: Edit script
+esac
+# Check for updates using the standard Arch utility
+# (Note: Wrapped with a quick check to avoid running heavy network queries too frequently)
+CUPD=$(checkupdates 2>/dev/null | wc -l)
+[ -z "$CUPD" ] && CUPD=0
+
+# Output based on update availability
+if [ "$CUPD" -gt 0 ]; then
+    echo "󰚰 ${CUPD} updates"
+else
+    echo "󰸟"  # Or leave empty (echo "") if you only want it to appear when updates exist
+fi

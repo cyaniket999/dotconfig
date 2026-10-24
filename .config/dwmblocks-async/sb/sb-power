@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# Handle mouse click events from dwmblocks
+case $BLOCK_BUTTON in
+	2) setsid -f alacritty -e nvim "$0" ;;
+    1)
+        # Left-click: Open dmenu power action selector
+        CHOICE=$(printf "Lock\nLogout\nReboot\nShutdown\nSuspend" | dmenu -i -p "Power Menu:")
+        case "$CHOICE" in
+            Lock)     setsid -f slock ;;                    # Requires slock (or change to your locker)
+            Logout)   kill -HUP $(pgrep -u $USER dwm) ;;   # Standard dwm session exit
+            Reboot)   systemctl reboot ;;                 # System reboot
+            Shutdown) systemctl poweroff ;;               # System shutdown
+            Suspend)  systemctl suspend ;;                # System sleep/suspend
+        esac
+        ;;
+esac
+
+# Static status bar display icon
+echo "  "

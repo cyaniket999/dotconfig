@@ -1,0 +1,71 @@
+#!/bin/sh
+
+# Configuration: Set to 1 to show percentage, 0 to show icon only
+SHOW_PERCENTAGE=0
+
+# Handle mouse click events from dwmblocks
+case $BLOCK_BUTTON in
+    1) 
+        if [ "$(nmcli networking)" = "enabled" ]; then
+            nmcli networking off
+        else
+            nmcli networking on
+        fi
+        ;;
+	2) setsid -f alacritty -e nvim "$0" ;;
+	3) setsid -f alacritty -e nmtui ;;
+esac
+# 1. Check if networking is completely disabled (Offline mode)
+if [ "$(nmcli networking)" = "disabled" ]; then
+    echo "󰅛" # Completely offline / networking disabled icon
+    exit 0
+fi
+
+# 2. Check if Ethernet is ACTUALLY connected
+if nmcli -t -f TYPE,STATE device 2>/dev/null | grep -q "^ethernet:connected"; then
+    echo "󰈀" # Ethernet connected icon
+    exit 0
+fi
+
+# 3. Check Wi-Fi Connection & Signal
+WIFI_IF=$(ip link show up | awk -F: '/wl/ {print $2}' | tr -d ' ')
+
+if [ -n "$WIFI_IF" ]; then
+    # Get signal using reliable nmcli IN-USE marker (*)
+    SIGNAL=$(nmcli -t -f IN-USE,SIGNAL device wifi 2>/dev/null | awk -F: '$1=="*" {print $2}')
+
+    # Fallback to /proc/net/wireless if nmcli fails
+    if [ -z "$SIGNAL" ] && [ -f /proc/net/wireless ]; then
+        SIGNAL=$(awk -v iface="$WIFI_IF" '$0 ~ iface {print int($3 * 100 / 70)}' /proc/net/wireless)
+    fi
+
+    # If networking is on, but Wi-Fi is not connected to any network
+    if [ -z "$SIGNAL" ]; then
+        echo "󰤮" # Networking on, but No Internet / Disconnected icon
+        exit 0
+    fi
+
+    # Determine Icon based on signal strength
+    if [ "$SIGNAL" -ge 80 ]; then
+        ICON="󰤨"
+    elif [ "$SIGNAL" -ge 60 ]; then
+        ICON="󰤥"
+    elif [ "$SIGNAL" -ge 40 ]; then
+        ICON="󰤢"
+    elif [ "$SIGNAL" -ge 20 ]; then
+        ICON="󰤟"
+    else
+        ICON="󰤯"
+    fi
+
+    # Output based on the toggle switch
+    if [ "$SHOW_PERCENTAGE" -eq 1 ] && [ -n "$SIGNAL" ]; then
+        echo "$ICON ${SIGNAL}%"
+    else
+        echo "$ICON"
+    fi
+    exit 0
+fi
+
+# 4. Fallback: Networking is on, but no connection found
+echo "󰤮"

@@ -1,0 +1,44 @@
+#!/bin/sh
+
+# Configuration: Set to 1 to show percentage, 0 to show gauge bar only
+SHOW_PERCENTAGE=0
+# Handle mouse click events from dwmblocks
+case $BLOCK_BUTTON in
+	2) setsid -f alacritty -e nvim "$0" ;;
+	3) setsid -f alacritty -e htop ;;
+esac
+# Calculate RAM usage percentage using free (in megabytes)
+read -r used total < <(free -m | awk '/^Mem:/ {print $3, $2}')
+[ -z "$used" ] && used=0
+[ -z "$total" ] || [ "$total" -eq 0 ] && total=1
+
+MEM_VAL=$(( used * 100 / total ))
+
+# True Proportional Meter/Gauge Bar Scale
+if [ "$MEM_VAL" -ge 88 ]; then
+    BAR="█" # Peak RAM usage
+elif [ "$MEM_VAL" -ge 76 ]; then
+    BAR="▇"
+elif [ "$MEM_VAL" -ge 63 ]; then
+    BAR="▆"
+elif [ "$MEM_VAL" -ge 51 ]; then
+    BAR="▅" # Half capacity
+elif [ "$MEM_VAL" -ge 38 ]; then
+    BAR="▄"
+elif [ "$MEM_VAL" -ge 26 ]; then
+    BAR="▃"
+elif [ "$MEM_VAL" -ge 13 ]; then
+    BAR="▂"
+else
+    BAR=" " # Low usage
+fi
+
+# Combine RAM icon with the dynamic meter bar
+ICON="$BAR"
+
+# Output based on the toggle switch
+if [ "$SHOW_PERCENTAGE" -eq 1 ]; then
+    echo "$ICON ${MEM_VAL}%"
+else
+    echo "$ICON"
+fi

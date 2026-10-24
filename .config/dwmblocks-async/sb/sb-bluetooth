@@ -1,0 +1,26 @@
+#!/bin/sh
+
+# Handle mouse click events from dwmblocks
+case $BLOCK_BUTTON in
+	1) 
+        if bluetoothctl show | grep -q "Powered: yes"; then
+            bluetoothctl power off
+        else
+            bluetoothctl power on
+        fi
+        ;;	# Left-click: Toggle Bluetooth power on/off
+	2) setsid -f alacritty -e nvim "$0" ;;
+	3) setsid -f blueman-manager ;;	# Right-click: Open Bluetooth manager GUI (install blueman)
+esac
+
+# Check Bluetooth status and output appropriate icon
+if bluetoothctl show | grep -q "Powered: yes"; then
+    # Check if any device is actively connected
+    if bluetoothctl devices Connected | grep -q "Device"; then
+        echo "󰂱" # Connected
+    else
+        echo "󰂯" # Powered On / Disconnected
+    fi
+else
+    echo "󰂲"     # Powered Off
+fi
