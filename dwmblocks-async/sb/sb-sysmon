@@ -1,0 +1,56 @@
+#!/bin/sh
+
+# Configuration: Set to 1 to show details, 0 to show gauge bars only
+SHOW_PERCENTAGE=0
+# Handle mouse click events from dwmblocks
+case $BLOCK_BUTTON in
+	3) setsid -f alacritty -e htop ;;         # Right-click: Open htop
+	2) setsid -f alacritty -e nvim "$0" ;;
+esac
+# Reusable function to map any percentage (0-100) to a meter bar
+get_bar() {
+    v=$1
+    if   [ "$v" -ge 88 ]; then echo "█"
+    elif [ "$v" -ge 76 ]; then echo "▇"
+    elif [ "$v" -ge 63 ]; then echo "▆"
+    elif [ "$v" -ge 51 ]; then echo "▅"
+    elif [ "$v" -ge 38 ]; then echo "▄"
+    elif [ "$v" -ge 26 ]; then echo "▃"
+    elif [ "$v" -ge 13 ]; then echo "▂"
+    else                       echo " "
+    fi
+}
+
+# 1. Calculate CPU Usage percentage via /proc/stat
+CPU_USAGE=$(awk -F' ' '/^cpu / {
+    idle1=$5; total1=0; for(i=2;i<=NF;i++) total1+=$i;
+    system("sleep 0.2");
+    getline < "/proc/stat";
+    idle2=$5; total2=0; for(i=2;i<=NF;i++) total2+=$i;
+    close("/proc/stat");
+    
+    total_diff = total2 - total1;
+    idle_diff = idle2 - idle1;
+    
+    if (total_diff > 0)
+        printf "%d", (100 * (total_diff - idle_diff) / total_diff);
+    else
+        printf "0";
+}' /proc/stat)
+[ -z "$CPU_USAGE" ] && CPU_USAGE=0
+CPU_BAR=$(get_bar "$CPU_USAGE")
+
+# 2. Calculate Memory Usage percentage and values
+read -r mem_used_mb mem_total_mb < <(free -m | awk '/^Mem:/ {print $3, $2}')
+[ -z "$mem_used_mb" ] && mem_used_mb=0
+[ -z "$mem_total_mb" ] || [ "$mem_total_mb" -eq 0 ] && mem_total_mb=1
+MEM_VAL=$(( mem_used_mb * 100 / mem_total_mb ))
+MEM_USED=$(free -h | awk '/^Mem:/ {print $3}')
+MEM_BAR=$(get_bar "$MEM_VAL")
+
+# Output based on the toggle switch
+if [ "$SHOW_PERCENTAGE" -eq 1 ]; then
+    echo "${CPU_BAR} ${CPU_USAGE}% ${MEM_BAR} ${MEM_USED}"
+else
+    echo "${CPU_BAR} ${MEM_BAR}"
+fi

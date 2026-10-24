@@ -1,0 +1,8 @@
+#! /bin/bash
+# Handle mouse click events from dwmblocks
+case $BLOCK_BUTTON in
+	2) setsid -f alacritty -e nvim "$0" ;;
+esac
+kern="$(uname -r)"
+echo -e "$kern "
+
