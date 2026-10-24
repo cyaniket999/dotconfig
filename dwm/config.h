@@ -74,7 +74,7 @@ static const char *termcmd[]  = { "st", NULL };
 static const char *terminal[]        = { "alacritty", NULL };
 static const char *roficmd[]        = { "rofi", "-show", "drun", NULL };
 static const char *filecmd[]        = { "thunar", NULL };
-static const char *wallcmd[] = { "~/.config/set-wallpaper", NULL };
+static const char *wallcmd[] = { "/home/aniket/.config/custom-scripts/set-wallpaper", NULL };
 /*
  * Xresources preferences to load at startup
  */
