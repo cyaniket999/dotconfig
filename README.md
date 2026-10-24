@@ -149,57 +149,6 @@ chmod +x ~/.xinitrc
 ln -s ~/.config/.Xresources ~/.Xresources
 chmod +x ~/.Xresources 
 ```
-~/.Xresources
-```
-! ==========================================
-! Gruvbox Dark Theme for dwm & X11
-! ==========================================
-
-! dwm UI Colors (Using the required dwm prefix)
-dwm.normbgcolor:      #282828
-dwm.normbordercolor:  #3c3836
-dwm.normfgcolor:      #ebdbb2
-dwm.selbgcolor:       #fe8019
-dwm.selbordercolor:   #fabd2f
-dwm.selfgcolor:       #282828
-
-! General X11 / Terminal Colors
-*.foreground:         #ebdbb2
-*.background:         #282828
-*.cursorColor:        #fe8019
-
-! Black / Dark Gray
-*.color0:             #282828
-*.color8:             #928374
-
-! Red
-*.color1:             #cc241d
-*.color9:             #fb4934
-
-! Green
-*.color2:             #98971a
-*.color10:            #b8bb26
-
-! Yellow
-*.color3:             #d79921
-*.color11:            #fabd2f
-
-! Blue
-*.color4:             #458588
-*.color12:            #83a598
-
-! Magenta / Purple
-*.color5:             #b16286
-*.color13:            #d3869b
-
-! Cyan / Aqua
-*.color6:             #689d6a
-*.color14:            #8ec07c
-
-! White / Light Gray
-*.color7:             #a89984
-*.color15:            #ebdbb2
-```
 
 ### 3. Compile Suckless Utilities
 
@@ -222,7 +171,7 @@ cd ~/.config/dmenu && sudo make clean install
 To ensure the wallpaper and theme switcher script works correctly on your system, follow these steps:
 
 1. Update dwm/config.h
-Open dwm/config.h and replace YOURUSERNAME with your actual Linux system username:
+Open (dwm/config.h) and replace YOURUSERNAME with your actual Linux system username:
 
 static const char *wallcmd[] = { "/home/YOURUSERNAME/.config/scripts/set-wallpaper", NULL };
 
@@ -232,7 +181,7 @@ cd ~/.config/dwm && sudo make clean install
 ```
 
 2. Configure Your Wallpaper Directory
-Open ~/.config/custom-scripts/set-wallpaper and ensure WALLPAPER_DIR points to the directory where your wallpaper images are stored:
+Open (~/.config/custom-scripts/set-wallpaper) and ensure 'WALLPAPER_DIR' points to the directory where your wallpaper images are stored:
 
 WALLPAPER_DIR="$HOME/Pictures/backgrounds"
 
