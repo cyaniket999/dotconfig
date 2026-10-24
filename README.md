@@ -12,6 +12,10 @@ A minimal, keyboard-driven desktop environment built around **dwm** and **dmenu*
 
 * **Pywal Theme Engine:** Dynamic color palette synchronization across `dwm`, `dmenu`, `alacritty`, and system components.
 
+* **State Preservation:** Retains window layouts, active tags, and client states across live restarts (`SIGHUP`).
+
+* **Lightweight & Modular:** Minimal background footprint, fast response times, and clean configuration separation.
+
 * **Interactive Status Bar (`dwmblocks`):** Highly modular status bar applets with full mouse interaction powered by the `statuscmd` patch:
 
   * **Icon Click:** Toggle individual status modules on and off on the fly.
@@ -20,9 +24,50 @@ A minimal, keyboard-driven desktop environment built around **dwm** and **dmenu*
 
   * **Middle Click:** Instantly open the block's underlying shell script inside `neovim` for quick editing.
 
-* **State Preservation:** Retains window layouts, active tags, and client states across live restarts (`SIGHUP`).
+# Available Modules (`sb/`)
 
-* **Lightweight & Modular:** Minimal background footprint, fast response times, and clean configuration separation.
+| Module Script | Description |
+| :--- | :--- |
+| `sb-battery` | Battery percentage and charging status |
+| `sb-bluetooth` | Bluetooth connection status & controls |
+| `sb-brightness` | Backlight / screen brightness level |
+| `sb-clock` | Date and time display |
+| `sb-cpu` | Real-time CPU usage monitoring |
+| `sb-disk` | Disk space usage for mounted drives |
+| `sb-home` | Home directory space / quick stats |
+| `sb-kernel` | Current Linux kernel version |
+| `sb-network` | Active network interface & connection state |
+| `sb-power` | Power menu and session management |
+| `sb-ram` | Memory (RAM) utilization |
+| `sb-root` | Root partition storage tracking |
+| `sb-sysmon` | General system performance monitor |
+| `sb-temp` | CPU/Hardware thermal sensors |
+| `sb-update` | Package manager update checker (Arch Linux) |
+| `sb-uptime` | System uptime counter |
+| `sb-volume` | Audio output level and mute status |
+| `sb-weather` | Current local weather conditions |
+
+# ⚙️ Customizing & Enabling Modules
+
+You can easily select which modules to display on your status bar by editing `config.h` in the `dwmblocks-async` directory:
+
+1. **Edit the Blocks Configuration:**
+   Open `config.h` and add or remove module entries in the `blocks` array to match your preferences:
+
+   ```c
+   static const Block blocks[] = {
+       /* Icon */  /* Command */               /* Interval */  /* Signal */
+       { "",       "sb-volume",                0,              10 },
+       { "",       "sb-ram",                   5,              1 },
+       { "",       "sb-cpu",                   2,              2 },
+       { "",       "sb-clock",                 60,             3 },
+   };
+ 
+2. **Save and Compile:**
+```
+   sudo make clean install
+   
+   ```
 
 ## 📦 Software & Dependencies
 
@@ -47,9 +92,7 @@ This setup utilizes lightweight, minimal daily tools. Install all core dependenc
 ### System & Build Dependencies
 
 ```
-sudo pacman -S --needed base-devel libx11 libxft libxinerama xorg-xinit xorg-server \
-                       alacritty thunar neovim rofi picom feh python-pywal \
-                       dunst xdotool
+sudo pacman -S --needed base-devel libx11 libxft libxinerama xorg-xinit xorg-server alacritty thunar neovim rofi picom feh python-pywal xdotool
 
 ```
 
