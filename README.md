@@ -4,11 +4,13 @@
 <img src="./assets/1.png" alt="Desktop Showcase" width="90%">
 <br/>
 </div>
-## 🎨 Overview
+<br/>
+
+# 🎨 Overview
 
 A minimal, keyboard-driven desktop environment built around **dwm** and **dmenu**. It features system-wide, dynamic theme switching powered by **Pywal**, fully synchronized across the window manager, launcher, terminal, and status bar.
 
-## ✨ Features
+# ✨ Features
 
 * **Pywal Theme Engine:** Dynamic color palette synchronization across `dwm`, `dmenu`, `alacritty`, and system components.
 
@@ -24,7 +26,7 @@ A minimal, keyboard-driven desktop environment built around **dwm** and **dmenu*
 
   * **Middle Click:** Instantly open the block's underlying shell script inside `neovim` for quick editing.
 
-# Available Modules (`sb/`)
+## Available Modules (`dwmblocks-async/sb/`)
 
 | Module Script | Description |
 | :--- | :--- |
@@ -47,7 +49,7 @@ A minimal, keyboard-driven desktop environment built around **dwm** and **dmenu*
 | `sb-volume` | Audio output level and mute status |
 | `sb-weather` | Current local weather conditions |
 
-# ⚙️ Customizing & Enabling Modules
+## ⚙️ Customizing & Enabling Modules
 
 You can easily select which modules to display on your status bar by editing `config.h` in the `dwmblocks-async` directory:
 
