@@ -195,6 +195,7 @@ yay -S python-pywal
 ```
 - Verify that the wal configuration directory exists inside ~/.config/wal (created automatically upon first running wal or when cloning your dotfiles).
 - Make sure there is file (.config/wal/templates/dwm.Xresources)
+
 ~/.config/wal/templates/dwm.Xresources
 ```
 dwm.normbgcolor:      {background}
