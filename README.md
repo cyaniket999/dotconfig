@@ -1,12 +1,12 @@
 <div align="center">
 **Clean, modular, and performance-focused dotfiles for Linux.**
+<img src="./assets/1.png" alt="Desktop Showcase" width="90%">
+<br />
+</div>
 ## 🎨 Overview
 
 A minimal, keyboard-driven desktop environment built around **dwm** and **dmenu**. It features system-wide, dynamic theme switching powered by **Pywal**, fully synchronized across the window manager, launcher, terminal, and status bar.
-<br />
 
-<img src="./assets/1.png" alt="Desktop Showcase" width="90%">
-</div>
 ## ✨ Features
 
 * **Pywal Theme Engine:** Dynamic color palette synchronization across `dwm`, `dmenu`, `alacritty`, and system components.
