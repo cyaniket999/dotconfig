@@ -74,7 +74,7 @@ static const char *termcmd[]  = { "st", NULL };
 static const char *terminal[]        = { "alacritty", NULL };
 static const char *roficmd[]        = { "rofi", "-show", "drun", NULL };
 static const char *filecmd[]        = { "thunar", NULL };
-
+static const char *wallcmd[] = { "/home/aniket/.config/custom-scripts/set-wallpaper", NULL };
 /*
  * Xresources preferences to load at startup
  */
@@ -131,6 +131,7 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
     { Mod4Mask,                     XK_c,      killclient,     {0} },
     /* Applications & Launchers */
+    { Mod4Mask,                     XK_w,      spawn,          {.v = wallcmd } },
 	{ Mod4Mask,                     XK_Return, spawn,          {.v = terminal } },
 	{ Mod4Mask,                     XK_r,      spawn,          {.v = roficmd } },
 	{ Mod4Mask,                     XK_e,      spawn,          {.v = filecmd } },
@@ -160,10 +161,10 @@ static const Button buttons[] = {
 	{ ClkStatusText,        0,              Button3,        sigstatusbar,   {.i = 3} },
 	{ ClkStatusText,        0,              Button4,        sigstatusbar,   {.i = 4} },
 	{ ClkStatusText,        0,              Button5,        sigstatusbar,   {.i = 5} },
-	{ ClkStatusText,        0,              6,              sigstatusbar,   {.i = 6} },
-	{ ClkStatusText,        0,              7,              sigstatusbar,   {.i = 7} },
-	{ ClkStatusText,        0,              8,              sigstatusbar,   {.i = 8} },
-	{ ClkStatusText,        0,              9,              sigstatusbar,   {.i = 9} },
+    { ClkStatusText,        0,              6,              sigstatusbar,   {.i = 6} },
+    { ClkStatusText,        0,              7,              sigstatusbar,   {.i = 7} },
+    { ClkStatusText,        0,              8,              sigstatusbar,   {.i = 8} },
+    { ClkStatusText,        0,              9,              sigstatusbar,   {.i = 9} },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
 	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
