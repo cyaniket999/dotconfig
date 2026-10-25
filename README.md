@@ -104,15 +104,21 @@ sudo pacman -S --needed base-devel libx11 libxft libxinerama xorg-xinit xorg-ser
 
 To replicate this environment from a clean `dwm` build, apply the following patches:
 
-* [`statuscmd`](https://dwm.suckless.org/patches/statuscmd/) — Enables clickable blocks and mouse interaction for `dwmblocks`.
+- [`statuscmd`](https://dwm.suckless.org/patches/statuscmd/) — Enables clickable blocks and mouse interaction for `dwmblocks`.
 
-* [`pertag`](https://dwm.suckless.org/patches/pertag/) — Keeps individual layouts and zoom settings per tag.
+- [`pertag`](https://dwm.suckless.org/patches/pertag/) — Keeps individual layouts and zoom settings per tag.
 
-* [`xresources`](https://dwm.suckless.org/patches/xresources/) — Loads theme colors dynamically from Xresources (`xrdb`) for Pywal support.
+- [`xresources`](https://dwm.suckless.org/patches/xresources/) — Loads theme colors dynamically from Xresources (`xrdb`) for Pywal support.
 
-* [`preserveonrestart`](https://dwm.suckless.org/patches/preserveonrestart/) — Preserves window layout and tag assignments during live restarts (`SIGHUP`).
+- [`preserveonrestart`](https://dwm.suckless.org/patches/preserveonrestart/) — Preserves window layout and tag assignments during live restarts (`SIGHUP`).
 
-* [`systray`](https://dwm.suckless.org/patches/systray/) — Native system tray for system tray applets.
+- [`systray`](https://dwm.suckless.org/patches/systray/) — Native system tray for system tray applets.
+
+- [`alwayscenter`](https://dwm.suckless.org/patches/alwayscenter/) — Automatically centers all floating windows without needing a rule.
+
+- [`attachbelow`](https://dwm.suckless.org/patches/attachbelow/) — Makes new clients attach below the selected client instead of always becoming the new master.
+
+- [`uselessgap`](https://dwm.suckless.org/patches/uselessgap/) — Adds useless gaps around windows and removes gaps and borders when in monocle mode.
 
 ## ⌨️ Keybindings Quick Reference
 

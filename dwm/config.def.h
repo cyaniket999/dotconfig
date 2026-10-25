@@ -6,8 +6,9 @@ static const unsigned int systrayonleft = 0;    /* 0: systray in the right corne
 static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
 static const int showsystray        = 1;        /* 0 means no systray */
-static unsigned int borderpx  = 1;        /* border pixel of windows */
-static unsigned int snap      = 32;       /* snap pixel */
+static unsigned int borderpx  = 2;        /* border pixel of windows */
+static const unsigned int gappx     = 6;        /* gaps between windows */
+static unsigned int snap      = 2;       /* snap pixel */
 static int showbar            = 1;        /* 0 means no bar */
 static int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = { "JetBrainsMono Nerd Font:size=10:style=Regular","monospace:size=10" };
@@ -40,7 +41,8 @@ static const Rule rules[] = {
 /* layout(s) */
 static float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
 static int nmaster     = 1;    /* number of clients in master area */
-static int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
+static int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
+static int attachbelow = 1;    /* 1 means attach after the currently active window */
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
 static const int refreshrate = 120;  /* refresh rate (per second) for client move/resize */
 
@@ -130,6 +132,8 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
     { Mod4Mask,                     XK_c,      killclient,     {0} },
+    { Mod4Mask,                     XK_Tab,           toggleAttachBelow,           {0} },
+
     /* Applications & Launchers */
     { Mod4Mask,                     XK_w,      spawn,          {.v = wallcmd } },
 	{ Mod4Mask,                     XK_Return, spawn,          {.v = terminal } },
