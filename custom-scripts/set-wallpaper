@@ -1,45 +1,54 @@
 #!/usr/bin/env bash
 
 WALLPAPER_DIR="$HOME/Pictures/backgrounds"
+DUNST_RELOAD="$HOME/.config/dunst/dunst.sh"
 
 if [ ! -d "$WALLPAPER_DIR" ]; then
     notify-send "Wallpaper Error" "Directory $WALLPAPER_DIR does not exist."
     exit 1
 fi
 
-# Read current Pywal colors if they exist
-if [ -f "$HOME/.cache/wal/colors" ]; then
-    mapfile -t WAL_COLORS < "$HOME/.cache/wal/colors"
-    BG="${WAL_COLORS[0]}"   # Background
-    FG="${WAL_COLORS[7]}"   # Normal text
-    SEL="${WAL_COLORS[2]}"  # Highlight accent
-else
-    # Default fallbacks
-    BG="#222222"
-    FG="#bbbbbb"
-    SEL="#005577"
+# Build wallpaper filename list
+WALLPAPERS=$(find "$WALLPAPER_DIR" -maxdepth 1 -type f \( -iname "*.jpg" -o -iname "*.png" -o -iname "*.jpeg" \) -exec basename {} \;)
+
+[ -z "$WALLPAPERS" ] && exit 0
+
+# Import Pywal colors for dmenu if available
+PYWAL_COLORS="$HOME/.cache/wal/colors.sh"
+DMENU_ARGS=(-l 3 -p "Wallpaper:")
+
+if [ -f "$PYWAL_COLORS" ]; then
+    # Load background (bg), foreground (fg), accent color (color1/color2)
+    source "$PYWAL_COLORS"
+    DMENU_ARGS+=(
+        -nb "$color0"
+        -nf "$color7"
+        -sb "$color2"
+        -sf "$color0"
+    )
 fi
 
-# Run dmenu with smaller height (-l 6) and Pywal colors
-SELECTED_WALL=$(ls "$WALLPAPER_DIR" | dmenu -i -l 3 -p "Select Wallpaper:" \
-    -nb "$BG" -nf "$FG" \
-    -sb "$SEL" -sf "$BG")
+# Launch dmenu picker
+SELECTED_WALL=$(echo "$WALLPAPERS" | dmenu "${DMENU_ARGS[@]}")
 
 [ -z "$SELECTED_WALL" ] && exit 0
 
 FULL_PATH="$WALLPAPER_DIR/$SELECTED_WALL"
 
-# 1. Generate colors and set wallpaper
-wal -i "$FULL_PATH"
+# 1. Run Pywal and reload Dunst
+if [ -x "$DUNST_RELOAD" ]; then
+    wal -q -i "$FULL_PATH" -o "$DUNST_RELOAD"
+else
+    wal -q -i "$FULL_PATH"
+fi
 
-# 2. Merge Pywal colors into X server memory
-xrdb -merge ~/.cache/wal/colors.Xresources
-[ -f ~/.cache/wal/dwm.Xresources ] && xrdb -merge ~/.cache/wal/dwm.Xresources
+# 2. Merge Pywal Xresources
+xrdb -merge ~/.Xresources
 
-# 3. Cleanly restart dwm live via SIGHUP
+# 3. Live restart dwm
 pkill -HUP -x dwm
 
-# 4. Re-bind dwmblocks
+# 4. Restart dwmblocks
 if pgrep -x dwmblocks >/dev/null; then
     pkill -x dwmblocks
     sleep 0.1
