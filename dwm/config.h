@@ -74,9 +74,9 @@ static char dmenumon[8]; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbordercolor, "-sf", selfgcolor, NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char *terminal[]        = { "alacritty", NULL };
-static const char *roficmd[]        = { "rofi", "-show", "drun", NULL };
 static const char *filecmd[]        = { "thunar", NULL };
-static const char *wallcmd[] = { "/home/aniket/.config/custom-scripts/set-wallpaper", NULL };
+static const char *roficmd[] = { "/home/aniket/.config/rofi/launcher.sh", NULL };
+static const char *wallcmd[] = { "/home/aniket/.config/rofi/wallpaper-grid.sh", NULL };
 /*
  * Xresources preferences to load at startup
  */
