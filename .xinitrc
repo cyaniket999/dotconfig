@@ -1,23 +1,22 @@
-# Export session variables
-#export XDG_SESSION_TYPE=x11
-#export XDG_CURRENT_DESKTOP=Unity
+#!/bin/sh
 
-# Update D-Bus and systemd environment with those variables
+# Update D-Bus & systemd environment (essential for GUI app permissions and notification daemons)
 if command -v dbus-update-activation-environment >/dev/null 2>&1; then
     dbus-update-activation-environment --systemd DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE
 fi
-#feh --bg-fill ~/Pictures/backgrounds/wall.png &
-# Restore the last applied Pywal color palette
+
+# Load Xresources into memory
+xrdb -merge ~/.Xresources
+
+# Restore wallpaper & theme
 wal -R &
 
-# Load last generated Xresources
-xrdb -merge ~/.cache/wal/colors.Xresources &
-xrdb -merge ~/.cache/wal/dwm.Xresources &
-
+# Start compositor & notifications
 picom &
+dunst &
 
-# Kill any existing instance before launching dwmblocks
-killall dwmblocks
+# Start status bar (kill existing instances first)
+killall -q dwmblocks
 dwmblocks &
 
 # Restart loop for dwm
