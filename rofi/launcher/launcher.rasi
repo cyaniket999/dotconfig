@@ -1,0 +1,119 @@
+configuration {
+    modi:                       "drun,run,filebrowser";
+    show-icons:                 true;
+    display-drun:               "Launch:";
+    drun-display-format:        "{name} <span size='small' alpha='50%' font_style='italic'>({generic})</span>";
+    font:                       "JetBrainsMono Nerd Font, monospace 10";
+}
+
+* {
+    /* Baseline colors */
+    background:                 #181818;
+    foreground:                 #e0e0e0;
+    selected-normal-background: #d0d5dd;
+
+    /* Standardized variable mappings */
+    bg-col:                     @background;
+    bg-alt:                     @selected-normal-background;
+    border-col:                 @selected-normal-background;
+    selected-col:               @selected-normal-background;
+    fg-col:                     @foreground;
+    fg-col-active:              @background;
+
+    background-color:           transparent;
+    text-color:                 @fg-col;
+    margin:                     0;
+    padding:                    0;
+    spacing:                    0;
+}
+
+window {
+    height:                     420px;
+    width:                      760px;
+    border:                     1px;
+    border-color:               @border-col;
+    border-radius:              12px;
+    background-color:           @bg-col;
+    padding:                    16px;
+}
+
+mainbox {
+    background-color:           transparent;
+    children:                   [ "inputbar", "listview" ];
+    spacing:                    12px;
+}
+
+inputbar {
+    children:                   [ "prompt", "entry" ];
+    background-color:           transparent;
+    border-radius:              6px;
+    padding:                    2px;
+    spacing:                    8px;
+}
+
+prompt {
+    background-color:           transparent;
+    text-color:                 @selected-col;
+    font:                       "JetBrainsMono Nerd Font Bold, monospace Bold 11";
+}
+
+entry {
+    background-color:           transparent;
+    text-color:                 @fg-col;
+    placeholder:                "";
+}
+
+listview {
+    border:                     0px;
+    columns:                    2;
+    lines:                      8;
+    spacing:                    6px;
+    cycle:                      true;
+    dynamic:                    true;
+    scrollbar:                  false;
+    layout:                     vertical;
+    fixed-height:               true;
+}
+
+element {
+    padding:                    6px 10px;
+    border-radius:              8px;
+    background-color:           transparent;
+    text-color:                 @fg-col;
+    spacing:                    10px;
+    children:                   [ "element-icon", "element-text" ];
+}
+
+element normal.normal,
+element alternate.normal,
+element normal.active,
+element alternate.active {
+    background-color:           transparent;
+    text-color:                 @fg-col;
+}
+
+element-icon {
+    size:                       20px;
+    horizontal-align:           0.5;
+    vertical-align:             0.5;
+    background-color:           transparent;
+}
+
+element-text {
+    background-color:           transparent;
+    text-color:                 inherit;
+    vertical-align:             0.5;
+    horizontal-align:           0.0;
+    expand:                     true;
+}
+
+element selected.normal,
+element selected.active {
+    background-color:           @selected-col;
+    text-color:                 @fg-col-active;
+}
+
+element-text selected {
+    background-color:           transparent;
+    text-color:                 @fg-col-active;
+}

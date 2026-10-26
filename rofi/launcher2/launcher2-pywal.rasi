@@ -1,0 +1,106 @@
+/* Import dynamic colors from pywal */
+@import "~/.cache/wal/colors-rofi-dark.rasi"
+
+configuration {
+    modi:                       "drun,run";
+    show-icons:                 true;
+    icon-theme:                 "Adwaita";
+    drun-display-format:        "{name}";
+    disable-history:            false;
+    sidebar-mode:               false;
+    font:                       "JetBrainsMono Nerd Font, monospace 10";
+}
+
+* {
+    /* Standardized variable mappings from Pywal */
+    bg-col:                     @background;
+    bg-alt:                     @selected-normal-background;
+    border-col:                 @selected-normal-background;
+    selected-col:               @selected-normal-background;
+    fg-col:                     @foreground;
+    fg-col-active:              @background;
+
+    background-color:           transparent;
+    text-color:                 @fg-col;
+    margin:                     0;
+    padding:                    0;
+    spacing:                    0;
+}
+
+window {
+    width:                      35%;
+    border:                     1px;
+    border-color:               @border-col;
+    border-radius:              12px;
+    background-color:           @bg-col;
+    padding:                    12px;
+}
+
+mainbox {
+    background-color:           transparent;
+    children:                   [ inputbar, listview ];
+}
+
+inputbar {
+    background-color:           @bg-col;
+    border:                     0px;
+    border-radius:              0px;
+    padding:                    10px 14px;
+    margin:                     0 0 10px 0;
+    children:                   [ entry ];
+}
+
+entry {
+    placeholder:                "Search applications...";
+    placeholder-color:          #6c7086;
+    text-color:                 @fg-col;
+}
+
+listview {
+    background-color:           transparent;
+    lines:                      8;
+    columns:                    1;
+    fixed-height:               false;
+    spacing:                    4px;
+}
+
+element {
+    background-color:           transparent;
+    padding:                    8px 12px;
+    border:                     0px;
+    border-radius:              0px;
+    spacing:                    12px;
+    children:                   [ element-icon, element-text ];
+}
+
+/* Explicitly remove Zebra Striping on Normal & Alternate rows */
+element normal.normal,
+element alternate.normal,
+element normal.active,
+element alternate.active {
+    background-color:           transparent;
+    text-color:                 @fg-col;
+}
+
+element-icon {
+    background-color:           transparent;
+    size:                       24px;
+    vertical-align:             0.5;
+}
+
+element-text {
+    background-color:           transparent;
+    vertical-align:             0.5;
+    text-color:                 inherit;
+}
+
+element selected.normal,
+element selected.active {
+    background-color:           @selected-col;
+    text-color:                 @fg-col-active;
+}
+
+element-text selected {
+    background-color:           transparent;
+    text-color:                 @fg-col-active;
+}

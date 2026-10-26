@@ -1,0 +1,96 @@
+/* Import Pywal dynamic colors (or replace with static variables) */
+@import "~/.cache/wal/colors-rofi-dark.rasi"
+
+configuration {
+    show-icons: true;
+}
+
+* {
+    bg-col:         @background;
+    bg-alt:         @background-alt;
+    border-col:     @selected-normal-background;
+    fg-col:         @foreground;
+    fg-col-active:  @background;
+    font:           "JetBrainsMono Nerd Font, monospace 8";
+}
+
+window {
+    width: 48%;
+    height: 45%;
+    border: 1px;
+    border-color: @border-col;
+    border-radius: 12px;
+    padding: 4px;
+    background-color: @bg-col;
+}
+
+mainbox {
+    children: [ inputbar, listview ];
+    spacing: 4px;
+    background-color: transparent;
+}
+
+inputbar {
+    enabled: true;
+    padding: 2px 4px;
+    background-color: transparent;
+    border: 0px;
+    children: [ prompt, entry ];
+}
+
+prompt {
+    text-color: @border-col;
+    margin: 0px 4px 0px 0px;
+}
+
+entry {
+    text-color: @border-col;
+    placeholder: "Search...";
+    placeholder-color: @border-col;
+}
+
+listview {
+    columns: 4;
+    lines: 3;
+    fixed-columns: true;
+    fixed-height: true;
+    cycle: true;
+    dynamic: true;
+    layout: vertical;
+    flow: horizontal;
+    background-color: transparent;
+    spacing: 2px;
+}
+
+element {
+    orientation: vertical;
+    children: [ element-icon, element-text ];
+    spacing: 0px;
+    padding: 0px;
+    border: 0px;
+    background-color: transparent;
+    text-color: @fg-col;
+}
+
+element selected {
+    background-color: @bg-alt;
+    border: 1px;
+    border-color: @border-col;
+    text-color: @fg-col;
+}
+
+element-icon {
+    size: 150px;
+    horizontal-align: 0.5;
+    vertical-align: 0.5;
+    border-radius: 0px;
+}
+
+element-text {
+    horizontal-align: 0.5;
+    vertical-align: 0.0;
+    expand: false;
+    margin: -12px 0px 0px 0px;
+    padding: 0px;
+    text-color: inherit;
+}

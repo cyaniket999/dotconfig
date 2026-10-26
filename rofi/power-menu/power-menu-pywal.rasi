@@ -1,0 +1,102 @@
+/* Import dynamic colors from pywal */
+@import "~/.cache/wal/colors-rofi-dark.rasi"
+
+configuration {
+    show-icons:                 false;
+    font:                       "JetBrainsMono Nerd Font, monospace 10";
+}
+
+* {
+    /* Standardized variable mappings from Pywal */
+    bg-col:                     @background;
+    bg-alt:                     @selected-normal-background;
+    border-col:                 @selected-normal-background;
+    selected-col:               @selected-normal-background;
+    fg-col:                     @foreground;
+    fg-col-active:              @background;
+
+    background-color:           transparent;
+    text-color:                 @fg-col;
+
+    margin:                     0;
+    padding:                    0;
+    spacing:                    0;
+}
+
+window {
+    height:                     240px;
+    width:                      300px;
+    border:                     1px;
+    border-color:               @border-col;
+    border-radius:              12px;
+    background-color:           @bg-col;
+    padding:                    16px;
+    location:                   center;
+    anchor:                     center;
+}
+
+mainbox {
+    background-color:           transparent;
+    children:                   [ "inputbar", "listview" ];
+    spacing:                    12px;
+}
+
+inputbar {
+    children:                   [ "prompt" ];
+    background-color:           transparent;
+    padding:                    2px 0px;
+}
+
+prompt {
+    background-color:           transparent;
+    text-color:                 @selected-col;
+    font:                       "JetBrainsMono Nerd Font Bold, monospace Bold 11";
+    horizontal-align:           0.5;
+}
+
+listview {
+    border:                     0px;
+    columns:                    1;
+    lines:                      4;
+    spacing:                    6px;
+    cycle:                      true;
+    dynamic:                    true;
+    scrollbar:                  false;
+    layout:                     vertical;
+    fixed-height:               true;
+}
+
+element {
+    padding:                    8px 12px;
+    border-radius:              8px;
+    background-color:           transparent;
+    text-color:                 @fg-col;
+    children:                   [ "element-text" ];
+}
+
+/* Explicitly remove Zebra Striping on Normal & Alternate rows */
+element normal.normal,
+element alternate.normal,
+element normal.active,
+element alternate.active {
+    background-color:           transparent;
+    text-color:                 @fg-col;
+}
+
+element-text {
+    background-color:           transparent;
+    text-color:                 inherit;
+    vertical-align:             0.5;
+    horizontal-align:           0.5;
+}
+
+element selected.normal,
+element selected.active {
+    background-color:           @selected-col;
+    text-color:                 @fg-col-active;
+}
+
+element-text selected {
+    background-color:           transparent;
+    text-color:                 @fg-col-active;
+}

@@ -1,0 +1,95 @@
+configuration {
+    show-icons:                 false;
+    font:                       "JetBrainsMono Nerd Font 9"; /* Reduced font size slightly */
+    disable-history:            true;
+    sidebar-mode:               false;
+}
+
+* {
+    /* Baseline static colors */
+    background:                 #181818;
+    foreground:                 #e0e0e0;
+    selected-normal-background: #d0d5dd;
+
+    /* Standardized variable mappings */
+    bg-col:                     #181818E6;
+    bg-alt:                     transparent;
+    border-col:                 #333333;
+    selected-col:               @selected-normal-background;
+    fg-col:                     @foreground;
+    fg-col-active:              #181818;
+
+    background-color:           transparent;
+    text-color:                 @fg-col;
+    margin:                     0;
+    padding:                    0;
+    spacing:                    0;
+}
+
+window {
+    transparency:               "real";
+    location:                   north east;
+    anchor:                     north east;
+    x-offset:                   -15px;
+    y-offset:                   40px;
+    width:                      325px;      
+    height:                     42px;       
+    border:                     1px;
+    border-color:               @border-col;
+    border-radius:              32px;       
+    background-color:           @bg-col;
+    padding:                    4px 6px;
+}
+
+mainbox {
+    background-color:           transparent;
+    children:                   [ listview ];
+    spacing:                    0px;
+}
+
+listview {
+    background-color:           transparent;
+    layout:                     horizontal;
+    lines:                      4;           
+    spacing:                    4px;         
+    cycle:                      true;
+    dynamic:                    true;
+    scrollbar:                  false;
+    fixed-height:               true;
+}
+
+element {
+    background-color:           transparent;
+    padding:                    4px 8px;     
+    border-radius:              16px;
+    border:                     0px;
+    cursor:                     pointer;
+    children:                   [ element-text ];
+}
+
+/* Explicitly remove Zebra Striping on Normal & Alternate elements */
+element normal.normal,
+element alternate.normal,
+element normal.active,
+element alternate.active {
+    background-color:           transparent;
+    text-color:                 @fg-col;
+}
+
+element-text {
+    background-color:           transparent;
+    text-color:                 inherit;
+    vertical-align:             0.5;
+    horizontal-align:           0.5;
+}
+
+element selected.normal,
+element selected.active {
+    background-color:           @selected-col;
+    text-color:                 @fg-col-active;
+}
+
+element-text selected {
+    background-color:           transparent;
+    text-color:                 @fg-col-active;
+}
