@@ -29,6 +29,6 @@
     X("", "~/.config/dwmblocks-async/sb/sb-battery",            5, 5) \
     X("", "~/.config/dwmblocks-async/sb/sb-volume",             0, 1) \
     X("", "~/.config/dwmblocks-async/sb/sb-clock",              1, 3) \
-    X("", "~/.config/dwmblocks-async/sb/sb-power",              0, 4)
+    X("", "~/.config/dwmblocks-async/sb/sb-rofipowermenu",              0, 4)
 
 #endif  // CONFIG_H
