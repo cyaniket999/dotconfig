@@ -34,4 +34,4 @@ case "$CHOSEN" in
     "$SHUTDOWN")
         systemctl poweroff
         ;;
-es:
+esac
