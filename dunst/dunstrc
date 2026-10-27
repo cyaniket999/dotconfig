@@ -22,7 +22,7 @@
     corner_radius = 0
     
     # Pywal Dynamic Border & Separator
-    frame_color = "#34479B"
+    frame_color = "#214E62"
     separator_color = frame
 
     font = JetBrainsMono Nerd Font 9
@@ -42,17 +42,17 @@
     mouse_right_click = close_all
 
 [urgency_low]
-    background = "#0f0b18E6"
-    foreground = "#d0d2e2"
+    background = "#070709E6"
+    foreground = "#9bc6d6"
     timeout = 5
 
 [urgency_normal]
-    background = "#0f0b18E6"
-    foreground = "#d0d2e2"
+    background = "#070709E6"
+    foreground = "#9bc6d6"
     timeout = 10
 
 [urgency_critical]
-    background = "#0f0b18E6"
-    foreground = "#34479B"
-    frame_color = "#34479B"
+    background = "#070709E6"
+    foreground = "#214E62"
+    frame_color = "#214E62"
     timeout = 0

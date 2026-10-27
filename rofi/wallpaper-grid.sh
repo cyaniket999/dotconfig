@@ -39,12 +39,11 @@ fi
 # 2. Merge Pywal Xresources
 xrdb -merge ~/.Xresources
 
-# 3. Live restart dwm
+# 3. Live restart dwm and give it a moment to settle
 pkill -HUP -x dwm
+sleep 0.3  # <-- Added delay so dwm finishes re-initializing
 
-# 4. Restart dwmblocks
-if pgrep -x dwmblocks >/dev/null; then
-    pkill -x dwmblocks
-    sleep 0.1
-    nohup dwmblocks >/dev/null 2>&1 &
-fi
+# 4. Safely restart dwmblocks
+pkill -x dwmblocks
+sleep 0.1
+nohup dwmblocks >/dev/null 2>&1 &
