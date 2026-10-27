@@ -13,23 +13,8 @@ WALLPAPERS=$(find "$WALLPAPER_DIR" -maxdepth 1 -type f \( -iname "*.jpg" -o -ina
 
 [ -z "$WALLPAPERS" ] && exit 0
 
-# Import Pywal colors for dmenu if available
-PYWAL_COLORS="$HOME/.cache/wal/colors.sh"
-DMENU_ARGS=(-l 3 -p "Wallpaper:")
-
-if [ -f "$PYWAL_COLORS" ]; then
-    # Load background (bg), foreground (fg), accent color (color1/color2)
-    source "$PYWAL_COLORS"
-    DMENU_ARGS+=(
-        -nb "$color0"
-        -nf "$color7"
-        -sb "$color2"
-        -sf "$color0"
-    )
-fi
-
-# Launch dmenu picker
-SELECTED_WALL=$(echo "$WALLPAPERS" | dmenu "${DMENU_ARGS[@]}")
+# Launch dmenu picker (colors are handled automatically via Xresources patch)
+SELECTED_WALL=$(echo "$WALLPAPERS" | dmenu -l 3 -p "Wallpaper:")
 
 [ -z "$SELECTED_WALL" ] && exit 0
 
@@ -45,12 +30,11 @@ fi
 # 2. Merge Pywal Xresources
 xrdb -merge ~/.Xresources
 
-# 3. Live restart dwm
+# 3. Live restart dwm and give it a moment to settle
 pkill -HUP -x dwm
+sleep 0.3  # Gives dwm time to re-initialize
 
-# 4. Restart dwmblocks
-if pgrep -x dwmblocks >/dev/null; then
-    pkill -x dwmblocks
-    sleep 0.1
-    nohup dwmblocks >/dev/null 2>&1 &
-fi
+# 4. Safely restart dwmblocks
+pkill -x dwmblocks
+sleep 0.1
+nohup dwmblocks >/dev/null 2>&1 &

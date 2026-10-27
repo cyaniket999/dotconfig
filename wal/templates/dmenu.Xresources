@@ -1,0 +1,7 @@
+dmenu.font: monospace:size=10
+dmenu.background: {background}
+dmenu.foreground: {foreground}
+dmenu.backgroundSel: {color2}
+dmenu.foregroundSel: {background}
+dmenu.topbar: 1
+dmenu.lines: 0
