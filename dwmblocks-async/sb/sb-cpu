@@ -35,7 +35,7 @@ ICON=" $BAR"
 
 # Output based on the toggle switch
 if [ "$SHOW_PERCENTAGE" -eq 1 ]; then
-    echo "$ICON ${CPU_VAL}%"
+    echo " ${CPU_VAL}%"
 else
     echo "$ICON"
 fi

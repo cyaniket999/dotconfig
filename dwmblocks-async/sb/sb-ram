@@ -38,7 +38,7 @@ ICON="$BAR"
 
 # Output based on the toggle switch
 if [ "$SHOW_PERCENTAGE" -eq 1 ]; then
-    echo "$ICON ${MEM_VAL}%"
+    echo " ${MEM_VAL}%"
 else
     echo "$ICON"
 fi
