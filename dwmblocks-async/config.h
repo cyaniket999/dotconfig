@@ -20,8 +20,7 @@
 #define BLOCKS(X)             \
     X("", "~/.config/dwmblocks-async/sb/sb-cpu",                10, 12) \
     X("", "~/.config/dwmblocks-async/sb/sb-ram",                10, 11) \
-    X("", "~/.config/dwmblocks-async/sb/sb-temp",               60, 10) \
-    X("", "~/.config/dwmblocks-async/sb/sb-home",               300, 9) \
+    X("", "~/.config/dwmblocks-async/sb/sb-home",               1800, 9) \
     X("", "~/.config/dwmblocks-async/sb/sb-update",             3600, 8) \
     X("", "~/.config/dwmblocks-async/sb/sb-brightness",         0, 2) \
     X("", "~/.config/dwmblocks-async/sb/sb-network",            5, 7) \
@@ -32,3 +31,4 @@
     X("", "~/.config/dwmblocks-async/sb/sb-power",              0, 4)
 
 #endif  // CONFIG_H
+

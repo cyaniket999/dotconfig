@@ -1,28 +1,21 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
+static const unsigned int gappx     = 6;        /* gaps between windows */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayonleft = 0;    /* 0: systray in the right corner, >0: systray on left of status text */
 static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
 static const int showsystray        = 1;        /* 0 means no systray */
-static unsigned int borderpx  = 2;        /* border pixel of windows */
-static const unsigned int gappx     = 6;        /* gaps between windows */
-static unsigned int snap      = 2;       /* snap pixel */
-static int showbar            = 1;        /* 0 means no bar */
-static int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "JetBrainsMono Nerd Font:size=10:style=Regular","monospace:size=10" };
-static const char dmenufont[]       = "monospace:size=10";
-static char normbgcolor[]           = "#222222";
-static char normbordercolor[]       = "#444444";
-static char normfgcolor[]           = "#bbbbbb";
-static char selfgcolor[]            = "#eeeeee";
-static char selbordercolor[]        = "#005577";
-static char selbgcolor[]            = "#005577";
+static unsigned int borderpx   = 1;        /* border pixel of windows */
+static unsigned int snap       = 32;       /* snap pixel */
+static int showbar             = 1;        /* 0 means no bar */
+static int topbar              = 1;        /* 0 means bottom bar */
+static char *fonts[]          = { "JetBrainsMono Nerd Font:size=10:style=Regular","monospace:size=10" };
 static char *colors[][3] = {
-       /*               fg           bg           border   */
-       [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
-       [SchemeSel]  = { selfgcolor,  selbgcolor,  selbordercolor  },
+       /* scheme        fg         bg         border   */
+       [SchemeNorm] = { "#bbbbbb", "#222222", "#444444" },
+       [SchemeSel]  = { "#eeeeee", "#005577", "#005577" },
 };
 
 /* tagging */
@@ -39,9 +32,9 @@ static const Rule rules[] = {
 };
 
 /* layout(s) */
-static float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
-static int nmaster     = 1;    /* number of clients in master area */
-static int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
+static float mfact = 0.55;           /* factor of master area size [0.05..0.95] */
+static int nmaster = 1;              /* number of clients in master area */
+static int resizehints = 1;          /* 1 means respect size hints in tiled resizals */
 static int attachbelow = 1;    /* 1 means attach after the currently active window */
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
 static const int refreshrate = 120;  /* refresh rate (per second) for client move/resize */
@@ -71,30 +64,12 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[8]; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbordercolor, "-sf", selfgcolor, NULL };
-static const char *termcmd[]  = { "st", NULL };
-static const char *terminal[]        = { "alacritty", NULL };
-static const char *filecmd[]        = { "thunar", NULL };
+static char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", "monospace:size=10", "-nb", "#222222", "-nf", "#bbbbbb", "-sb", "#005577", "-sf", "#eeeeee", NULL };
+static const char *termcmd[] = { "st", NULL };
+static const char *terminal[] = { "alacritty", NULL };
+static const char *filecmd[] = { "thunar", NULL };
 static const char *roficmd[] = { "/home/aniket/.config/rofi/launcher.sh", NULL };
-static const char *wallcmd[] = { "/home/aniket/.config/dwm/custom-scripts/set-wallpaper.sh", NULL };
-/*
- * Xresources preferences to load at startup
- */
-ResourcePref resources[] = {
-		{ "normbgcolor",        STRING,  &normbgcolor },
-		{ "normbordercolor",    STRING,  &normbordercolor },
-		{ "normfgcolor",        STRING,  &normfgcolor },
-		{ "selbgcolor",         STRING,  &selbgcolor },
-		{ "selbordercolor",     STRING,  &selbordercolor },
-		{ "selfgcolor",         STRING,  &selfgcolor },
-		{ "borderpx",          	INTEGER, &borderpx },
-		{ "snap",          		INTEGER, &snap },
-		{ "showbar",          	INTEGER, &showbar },
-		{ "topbar",          	INTEGER, &topbar },
-		{ "nmaster",          	INTEGER, &nmaster },
-		{ "resizehints",       	INTEGER, &resizehints },
-		{ "mfact",      	 	FLOAT,   &mfact },
-};
+static const char *walcmd[] = { "/home/aniket/.config/dwm/custom-scripts/wal-menu.sh", NULL };
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -121,6 +96,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
+	{ MODKEY,                       XK_F5,     xresreload,     {0} },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
@@ -131,26 +107,26 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
-    { Mod4Mask,                     XK_c,      killclient,     {0} },
-    { Mod4Mask,                     XK_Tab,           toggleAttachBelow,           {0} },
+	{ MODKEY|ControlMask|ShiftMask, XK_q,      quit,           {1} },
+	{ Mod4Mask,                     XK_Tab,    toggleAttachBelow,           {0} },
+	{ Mod4Mask,                     XK_c,      killclient,     {0} },
 
     /* Applications & Launchers */
-    { Mod4Mask,                     XK_w,      spawn,          {.v = wallcmd } },
+ 	{ Mod4Mask,                     XK_w,      spawn,          {.v = walcmd } },
 	{ Mod4Mask,                     XK_Return, spawn,          {.v = terminal } },
 	{ Mod4Mask,                     XK_r,      spawn,          {.v = roficmd } },
 	{ Mod4Mask,                     XK_e,      spawn,          {.v = filecmd } },
 	/* Hardware Keys */
-	{ 0,  	    XK_Print,  spawn,          SHCMD("mkdir -p ~/Pictures/Screenshots && maim ~/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png && notify-send 'Screenshot' 'Full screen saved to Pictures'") },
-	{ Mod4Mask, XK_Print,  spawn,          SHCMD("mkdir -p ~/Pictures/Screenshots && maim -s ~/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png && notify-send 'Screenshot' 'Selected area saved to Pictures'") },
+	{ 0,  	    XK_Print,  spawn,          SHCMD("mkdir -p ~/Pictures/screenshots && maim ~/Pictures/screenshots/$(date +%Y-%m-%d_%H-%M-%S).png && notify-send 'Screenshot' 'Full screen saved to Pictures'") },
+	{ Mod4Mask, XK_Print,  spawn,          SHCMD("mkdir -p ~/Pictures/screenshots && maim -s ~/Pictures/screenshots/$(date +%Y-%m-%d_%H-%M-%S).png && notify-send 'Screenshot' 'Selected area saved to Pictures'") },
 	{ 0,        XF86XK_AudioMute,           spawn,          SHCMD("pactl set-sink-mute @DEFAULT_SINK@ toggle && pkill -RTMIN+1 dwmblocks") },
 	{ 0,        XF86XK_AudioLowerVolume,    spawn,          SHCMD("pactl set-sink-volume @DEFAULT_SINK@ -5% && pkill -RTMIN+1 dwmblocks") },
 	{ 0,        XF86XK_AudioRaiseVolume,    spawn,          SHCMD("pactl set-sink-volume @DEFAULT_SINK@ +5% && pkill -RTMIN+1 dwmblocks") },
-    { 0,        XF86XK_MonBrightnessUp,     spawn,          SHCMD("brightnessctl set +5% && pkill -RTMIN+2 dwmblocks") },
-    { 0,        XF86XK_MonBrightnessDown,   spawn,          SHCMD("brightnessctl set 5%- && pkill -RTMIN+2 dwmblocks") },
-    { 0,        XF86XK_AudioPlay,           spawn,          SHCMD("playerctl play-pause") },
+	{ 0,        XF86XK_MonBrightnessUp,     spawn,          SHCMD("brightnessctl set +5% && pkill -RTMIN+2 dwmblocks") },
+	{ 0,        XF86XK_MonBrightnessDown,   spawn,          SHCMD("brightnessctl set 5%- && pkill -RTMIN+2 dwmblocks") },
+	{ 0,        XF86XK_AudioPlay,           spawn,          SHCMD("playerctl play-pause") },
 	{ 0,        XF86XK_AudioNext,           spawn,          SHCMD("playerctl next") },
 	{ 0,        XF86XK_AudioPrev,           spawn,          SHCMD("playerctl previous") },
-
 };
 
 /* button definitions */
@@ -165,10 +141,10 @@ static const Button buttons[] = {
 	{ ClkStatusText,        0,              Button3,        sigstatusbar,   {.i = 3} },
 	{ ClkStatusText,        0,              Button4,        sigstatusbar,   {.i = 4} },
 	{ ClkStatusText,        0,              Button5,        sigstatusbar,   {.i = 5} },
-    { ClkStatusText,        0,              6,              sigstatusbar,   {.i = 6} },
-    { ClkStatusText,        0,              7,              sigstatusbar,   {.i = 7} },
-    { ClkStatusText,        0,              8,              sigstatusbar,   {.i = 8} },
-    { ClkStatusText,        0,              9,              sigstatusbar,   {.i = 9} },
+	{ ClkStatusText,        0,              6,              sigstatusbar,   {.i = 6} },
+	{ ClkStatusText,        0,              7,              sigstatusbar,   {.i = 7} },
+	{ ClkStatusText,        0,              8,              sigstatusbar,   {.i = 8} },
+	{ ClkStatusText,        0,              9,              sigstatusbar,   {.i = 9} },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
 	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
@@ -178,3 +154,26 @@ static const Button buttons[] = {
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
 };
 
+/* X resources to update */
+static const XResPref resources[] = {
+	/* name                type     address */
+	{ "dwm.font",          STRING,  &fonts[0] },
+	{ "dwm.dmenufont",     STRING,  &dmenucmd[4] },
+	{ "dwm.background",    STRING,  &dmenucmd[6] },
+	{ "dwm.foreground",    STRING,  &dmenucmd[8] },
+	{ "dwm.backgroundSel", STRING,  &dmenucmd[10] },
+	{ "dwm.foregroundSel", STRING,  &dmenucmd[12] },
+	{ "dwm.foreground",    STRING,  &colors[SchemeNorm][ColFg] },
+	{ "dwm.background",    STRING,  &colors[SchemeNorm][ColBg] },
+	{ "dwm.border",        STRING,  &colors[SchemeNorm][ColBorder] },
+	{ "dwm.foregroundSel", STRING,  &colors[SchemeSel][ColFg] },
+	{ "dwm.backgroundSel", STRING,  &colors[SchemeSel][ColBg] },
+	{ "dwm.borderSel",     STRING,  &colors[SchemeSel][ColBorder] },
+	{ "dwm.borderpx",      INTEGER, &borderpx },
+	{ "dwm.snap",          INTEGER, &snap },
+	{ "dwm.showbar",       INTEGER, &showbar },
+	{ "dwm.topbar",        INTEGER, &topbar },
+	{ "dwm.nmaster",       INTEGER, &nmaster },
+	{ "dwm.resizehints",   INTEGER, &resizehints },
+	{ "dwm.mfact",         FLOAT,   &mfact },
+};
