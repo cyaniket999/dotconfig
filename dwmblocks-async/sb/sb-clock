@@ -1,11 +1,21 @@
 #!/bin/sh
 
-# Handle mouse click events from dwmblocks
-case $BLOCK_BUTTON in
-	2) setsid -f alacritty -e nvim "$0" ;;
-	3) setsid -f cal -y ;;
+STATE_FILE="/tmp/dwm_date_state"
+
+case "$BLOCK_BUTTON" in
+    1)
+        if [ -f "$STATE_FILE" ]; then
+            rm -f "$STATE_FILE"
+        else
+            touch "$STATE_FILE"
+        fi
+        ;;
+    2) setsid -f alacritty -e nvim "$0" ;;
+    3) setsid -f alacritty -e sh -c "cal -y; read -n 1 -s" ;;
 esac
 
-# Output date format (Day/Month/Year) and time
-date '+%d/%m/%y %I:%M %p'
-#date '+%I:%M %p'
+if [ -f "$STATE_FILE" ]; then
+    date '+%a, %d %b %Y'
+else
+    date '+%I:%M %p'
+fi

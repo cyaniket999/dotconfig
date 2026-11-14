@@ -3,7 +3,20 @@
 case "$BLOCK_BUTTON" in
     2) setsid -f alacritty -e nvim "$0" ;; 
     1)
-        CHOICE=$(printf "Lock\nLogout\nReboot\nShutdown\nSuspend" | dmenu -i -p "Power Menu:")
+        NB=$(xrdb -query | grep 'dwm.dmenubg:' | awk '{print $2}')
+        NF=$(xrdb -query | grep 'dwm.dmenufg:' | awk '{print $2}')
+        SB=$(xrdb -query | grep 'dwm.dmenuselbg:' | awk '{print $2}')
+        SF=$(xrdb -query | grep 'dwm.dmenuselfg:' | awk '{print $2}')
+        FN=$(xrdb -get dwm.dmenufont)
+        FN="${FN:-JetBrainsMono Nerd Font:size=9.5:style=Regular}"
+
+        NB="${NB:-#121214}"
+        NF="${NF:-#d4d4d8}"
+        SB="${SB:-#d97706}"
+        SF="${SF:-#ffffff}"
+
+        CHOICE=$(printf "Lock\nLogout\nReboot\nShutdown\nSuspend" | dmenu -i -p "Power Menu:" -fn "$FN" -nb "$NB" -nf "$NF" -sb "$SB" -sf "$SF")
+        
         case "$CHOICE" in
             Lock)     setsid -f slock ;;
             Logout)   kill -HUP $(pgrep -u "$USER" dwm) ;;

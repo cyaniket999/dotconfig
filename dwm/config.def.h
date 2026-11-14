@@ -11,7 +11,7 @@ static unsigned int borderpx   = 1;        /* border pixel of windows */
 static unsigned int snap       = 32;       /* snap pixel */
 static int showbar             = 1;        /* 0 means no bar */
 static int topbar              = 1;        /* 0 means bottom bar */
-static char *fonts[]          = { "JetBrainsMono Nerd Font:size=10:style=Regular","monospace:size=10" };
+static char *fonts[]          = { "monospace:size=10" };
 static char *colors[][3] = {
        /* scheme        fg         bg         border   */
        [SchemeNorm] = { "#bbbbbb", "#222222", "#444444" },
@@ -156,24 +156,24 @@ static const Button buttons[] = {
 
 /* X resources to update */
 static const XResPref resources[] = {
-	/* name                type     address */
-	{ "dwm.font",          STRING,  &fonts[0] },
-	{ "dwm.dmenufont",     STRING,  &dmenucmd[4] },
-	{ "dwm.background",    STRING,  &dmenucmd[6] },
-	{ "dwm.foreground",    STRING,  &dmenucmd[8] },
-	{ "dwm.backgroundSel", STRING,  &dmenucmd[10] },
-	{ "dwm.foregroundSel", STRING,  &dmenucmd[12] },
-	{ "dwm.foreground",    STRING,  &colors[SchemeNorm][ColFg] },
-	{ "dwm.background",    STRING,  &colors[SchemeNorm][ColBg] },
-	{ "dwm.border",        STRING,  &colors[SchemeNorm][ColBorder] },
-	{ "dwm.foregroundSel", STRING,  &colors[SchemeSel][ColFg] },
-	{ "dwm.backgroundSel", STRING,  &colors[SchemeSel][ColBg] },
-	{ "dwm.borderSel",     STRING,  &colors[SchemeSel][ColBorder] },
-	{ "dwm.borderpx",      INTEGER, &borderpx },
-	{ "dwm.snap",          INTEGER, &snap },
-	{ "dwm.showbar",       INTEGER, &showbar },
-	{ "dwm.topbar",        INTEGER, &topbar },
-	{ "dwm.nmaster",       INTEGER, &nmaster },
-	{ "dwm.resizehints",   INTEGER, &resizehints },
-	{ "dwm.mfact",         FLOAT,   &mfact },
+    /* name                 type     address */
+    { "dwm.font",           STRING,  &fonts[0] },
+    { "dwm.dmenufont",      STRING,  &dmenucmd[4] },
+    { "dwm.dmenubg",        STRING,  &dmenucmd[6] },
+    { "dwm.dmenufg",        STRING,  &dmenucmd[8] },
+    { "dwm.dmenuselbg",     STRING,  &dmenucmd[10] },
+    { "dwm.dmenuselfg",     STRING,  &dmenucmd[12] },
+    { "dwm.foreground",     STRING,  &colors[SchemeNorm][ColFg] },
+    { "dwm.background",     STRING,  &colors[SchemeNorm][ColBg] },
+    { "dwm.border",         STRING,  &colors[SchemeNorm][ColBorder] },
+    { "dwm.foregroundSel",  STRING,  &colors[SchemeSel][ColFg] },
+    { "dwm.backgroundSel",  STRING,  &colors[SchemeSel][ColBg] },
+    { "dwm.borderSel",      STRING,  &colors[SchemeSel][ColBorder] },
+    { "dwm.borderpx",       INTEGER, &borderpx },
+    { "dwm.snap",           INTEGER, &snap },
+    { "dwm.showbar",        INTEGER, &showbar },
+    { "dwm.topbar",         INTEGER, &topbar },
+    { "dwm.nmaster",        INTEGER, &nmaster },
+    { "dwm.resizehints",    INTEGER, &resizehints },
+    { "dwm.mfact",          FLOAT,   &mfact },
 };
