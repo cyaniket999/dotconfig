@@ -1,7 +1,10 @@
-dwm.background:    {background}
-dwm.foreground:    {foreground}
-dwm.border:        {color8}
-
+dwm.background: {color0}
+dwm.foreground: {foreground}
 dwm.backgroundSel: {color2}
 dwm.foregroundSel: {foreground}
-dwm.borderSel:     {color4}
+dwm.dmenubg: {color0}
+dwm.dmenufg: {foreground}
+dwm.dmenuselbg: {color2}
+dwm.dmenuselfg: {foreground}
+dwm.border: {color0}
+dwm.borderSel: {color2}

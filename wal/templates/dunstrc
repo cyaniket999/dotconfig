@@ -3,7 +3,7 @@
     monitor = 0
     follow = mouse
     width = 300
-    height = (0, 150)
+    height = 150
     origin = top-right
     offset = (15, 40)
     notification_limit = 5
@@ -22,8 +22,8 @@
     corner_radius = 0
     
     # Pywal Dynamic Border & Separator
-    frame_color = "{color1}"
-    separator_color = frame
+    frame_color = "{color2}"
+    separator_color = "auto"
 
     font = JetBrainsMono Nerd Font 9
     line_height = 0
@@ -42,17 +42,19 @@
     mouse_right_click = close_all
 
 [urgency_low]
-    background = "{background}E6"
+    background = "{color0}"
     foreground = "{foreground}"
+    frame_color = "{color4}"
     timeout = 5
 
 [urgency_normal]
-    background = "{background}E6"
+    background = "{color0}"
     foreground = "{foreground}"
-    timeout = 10
+    frame_color = "{color4}"
+    timeout = 5
 
 [urgency_critical]
-    background = "{background}E6"
-    foreground = "{color1}"
-    frame_color = "{color1}"
-    timeout = 0
+    background = "{color1}"
+    foreground = "{foreground}"
+    frame_color = "{color3}"
+    timeout = 5
