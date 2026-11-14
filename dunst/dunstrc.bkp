@@ -1,0 +1,58 @@
+[global]
+    script = ~/.config/dunst/play_sound.sh
+    monitor = 0
+    follow = mouse
+    width = 300
+    height = 150
+    origin = top-right
+    offset = (15, 40)
+    notification_limit = 5
+
+    progress_bar = true
+    progress_bar_height = 8
+    progress_bar_frame_width = 1
+    progress_bar_min_width = 150
+    progress_bar_max_width = 300
+
+    padding = 10
+    horizontal_padding = 10
+    text_icon_padding = 0
+    
+    frame_width = 2
+    corner_radius = 0
+    
+    # Pywal Dynamic Border & Separator
+    frame_color = "#9B8776"
+    separator_color = frame
+
+    font = JetBrainsMono Nerd Font 9
+    line_height = 0
+    markup = full
+    format = "<b>%s</b>\n%b"
+    alignment = left
+    vertical_alignment = center
+    word_wrap = true
+
+    icon_position = left
+    min_icon_size = 32
+    max_icon_size = 64
+
+    mouse_left_click = close_current
+    mouse_middle_click = do_action, close_current
+    mouse_right_click = close_all
+
+[urgency_low]
+    background = "#0f1015E6"
+    foreground = "#e4e2dd"
+    timeout = 5
+
+[urgency_normal]
+    background = "#0f1015E6"
+    foreground = "#e4e2dd"
+    timeout = 10
+
+[urgency_critical]
+    background = "#0f1015E6"
+    foreground = "#9B8776"
+    frame_color = "#9B8776"
+    timeout = 0
